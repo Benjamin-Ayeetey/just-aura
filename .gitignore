@@ -1,0 +1,11 @@
+node_modules/
+dist/
+.npm-cache/
+*.log
+.vercel/
+.env
+.env.*
+desktop.ini
+preview-*.jpg
+brand/
+assets/
