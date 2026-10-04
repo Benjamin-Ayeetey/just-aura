@@ -1,7 +1,5 @@
 import '@fontsource/montserrat/latin-400.css';
 import '@fontsource/montserrat/latin-500.css';
-import '@fontsource/cormorant-garamond/latin-400.css';
-import '@fontsource/cormorant-garamond/latin-400-italic.css';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Lenis from 'lenis';
@@ -53,6 +51,11 @@ matchMedia.add('(prefers-reduced-motion: no-preference)',()=>{
   const intro=gsap.timeline({defaults:{duration:1.1,ease:'power3.out'}});
   intro.from('h1',{y:35,opacity:0}).from('.hero-intro',{y:20,opacity:0,stagger:.12},.2).from('.hero-photo img',{scale:1.055,duration:1.7},0);
   for(const heading of document.querySelectorAll('[data-reveal]')){
+    // Keep Austin's connected lettering intact during the introductory reveal.
+    if(heading.closest('.intro')){
+      gsap.from(heading,{y:28,opacity:0,duration:.75,ease:'power2.out',scrollTrigger:{trigger:heading,start:'top 90%',once:true}});
+      continue;
+    }
     // Retain one unsplit accessible heading name; visual words are decorative.
     const accessibleCopy=heading.cloneNode(true);accessibleCopy.querySelectorAll('br').forEach(br=>br.replaceWith(' '));const label=accessibleCopy.textContent.replace(/\s+/g,' ').trim();heading.setAttribute('aria-label',label);
     const split=node=>{for(const child of [...node.childNodes]){if(child.nodeType===3){const fragment=document.createDocumentFragment();for(const token of child.textContent.split(/(\s+)/)){if(!token)continue;if(/\s/.test(token))fragment.append(document.createTextNode(token));else{const span=document.createElement('span');span.className='word';span.setAttribute('aria-hidden','true');span.textContent=token;fragment.append(span);}}child.replaceWith(fragment);}else if(child.nodeType===1)split(child);}};
@@ -78,4 +81,5 @@ const refresh=()=>ScrollTrigger.refresh();document.fonts.ready.then(refresh);
 for(const img of document.images) if(!img.complete) img.addEventListener('load',refresh,{once:true});
 for(const details of document.querySelectorAll('details'))details.addEventListener('toggle',refresh);
 window.addEventListener('pagehide',()=>{matchMedia.revert();ScrollTrigger.getAll().forEach(t=>t.kill());if(enquiryURL) URL.revokeObjectURL(enquiryURL);});
+
 
