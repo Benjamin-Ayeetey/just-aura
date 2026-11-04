@@ -10,6 +10,7 @@ preview-*.jpg
 brand/
 assets/
 
-# Local Austin font evaluation; obtain a web licence before publishing.
-public/fonts/austin.ttf
-public/fonts/Austin-License.txt
+
+billing/build/
+
+preview-*.png

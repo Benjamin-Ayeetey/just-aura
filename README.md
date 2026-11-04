@@ -1,9 +1,18 @@
-# Just Aura
+# Just Aura projects
 
-Run `npm install`, then `npm run dev`. Build with `npm run build`; serve the production result with `npm run preview`.
+Two independent applications live in this repository:
 
-Original brand references and photographs remain in `brand/` and `assets/`. `node scripts/assets.mjs` regenerates optimized photographs. See DESIGN.md for brand analysis and art direction.
+| Folder | Application | Start command inside folder | Local address |
+| --- | --- | --- | --- |
+| `website/` | Public beauty website | `npm run dev` | http://127.0.0.1:5173/ |
+| `billing/` | Private invoice and receipt tool | `npm run dev` | http://127.0.0.1:5174/ |
 
-Contact configuration lives in `src/config.js`. Sample contacts are intentional. The booking form validates fields and prepares a downloadable enquiry locally; it does not send requests, process payments, or confirm bookings. Connect a real enquiry service before launch and provide its privacy information. No entered information is persisted in browser storage.
+Each application has its own package.json, package-lock.json, node_modules, source, public assets, and build output. Run `npm ci` in the relevant folder to install it independently.
 
-Typography: self-hosted Montserrat and Cormorant Garamond via Fontsource (SIL Open Font License). Icons: Solar via Iconify (MIT). Motion: GSAP + ScrollTrigger and Lenis, bypassed for reduced motion. No WebGL. Images: exclusively user-provided.
+From the repository root, `npm run website` and `npm run billing` are convenient shortcuts. Run them in separate terminals to view both at once. `npm run build` builds only the website; `npm run billing:build` builds the tool; `npm run billing:test` runs its tests.
+
+`brand/` holds shared original brand-reference materials. `website/assets/` holds original website photographs. `docs/previews/` contains local preview evidence. Generated dependencies and builds are ignored by Git.
+
+Vercel's root configuration explicitly installs and builds `website/` and serves `website/dist`. The billing tool is not included in that deployment.
+
+Billing records stay in this browser's storage. Continue using http://127.0.0.1:5174/ to retain access to existing records; changing browser, hostname or port creates a different storage location. Export backups regularly.
